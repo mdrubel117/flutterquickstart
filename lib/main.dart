@@ -8,52 +8,57 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ListView App',
+      title: 'Two Screen App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: FirstScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  final List<String> items = List<String>.generate(100, (i) => "Item $i");
-
+class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ListView App'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.refresh),
+        title: Text('First Screen'),
+      ),
+      body: Container(
+        color: Colors.lightBlueAccent,
+        child: Center(
+          child: ElevatedButton(
             onPressed: () {
-              // Add refresh functionality here
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: Text('This is a simple ListView app'),
-                  );
-                },
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SecondScreen()),
               );
             },
+            child: Text('Go to Second Screen'),
           ),
-        ],
+        ),
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('${items[index]}'),
-          );
-        },
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Screen'),
+      ),
+      body: Container(
+        color: Colors.lightGreenAccent,
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Back to First Screen'),
+          ),
+        ),
       ),
     );
   }
